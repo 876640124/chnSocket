@@ -39,11 +39,11 @@ public class SocketBIOThreadPool {
                         }
                     }
                     System.out.println("连接断开");
+                    client.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
         }
-
     }
 }
