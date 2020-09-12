@@ -1,4 +1,4 @@
-package socket;
+package socket1;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -10,7 +10,8 @@ public class MySocket {
         try {
             InetAddress localHost = InetAddress.getLocalHost();
             String hostAddress = localHost.getHostAddress();
-            Socket socket = new Socket(hostAddress, 1111);
+            System.out.println(hostAddress);
+            Socket socket = new Socket(hostAddress, 9090);
             OutputStream outputStream = socket.getOutputStream();
             outputStream.write("1".getBytes("UTF-8"));
             outputStream.close();
