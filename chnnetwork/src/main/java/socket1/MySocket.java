@@ -14,10 +14,14 @@ public class MySocket {
             Socket socket = new Socket(hostAddress, 9090);
             OutputStream outputStream = socket.getOutputStream();
             outputStream.write("1".getBytes("UTF-8"));
+            outputStream.flush();
             outputStream.close();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        for (;;){
+
         }
     }
 

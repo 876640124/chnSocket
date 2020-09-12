@@ -9,7 +9,7 @@ public class MyServerSocket {
 
     public static void main(String[] args) {
         try {
-            ServerSocket server = new ServerSocket(1111);
+            ServerSocket server = new ServerSocket(9090);
             System.out.println("等待连接");
             Socket socket = server.accept();
             System.out.println("连接创建");
