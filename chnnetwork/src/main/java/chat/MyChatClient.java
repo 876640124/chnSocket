@@ -3,7 +3,6 @@ package chat;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Scanner;
 
 // 最原始的socket连接客户端
 public class MyChatClient {
@@ -13,24 +12,38 @@ public class MyChatClient {
             InetAddress localHost = InetAddress.getLocalHost();
             String hostAddress = localHost.getHostAddress();
             System.out.println(hostAddress);
-            Socket socket = new Socket(hostAddress, 9090);
+            Socket client = new Socket(hostAddress, 9090);
 
             //发送线程
             new Thread(() -> {
-                OutputStream outputStream = null;
+                OutputStream out = null;
                 try {
-                    outputStream = socket.getOutputStream();
+
+                  /* client.setTcpNoDelay(true);
+                    client.setSendBufferSize(20);*/
+                    out = client.getOutputStream();
+
+                    InputStream in = System.in;
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                   // BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
                     while (true) {
-                        Scanner sc = new Scanner(System.in);
-                        String str = sc.nextLine();
-                        outputStream.write(str.getBytes("UTF-8"));
-                        outputStream.flush();
+                        String line = reader.readLine();
+                        if (line != null) {
+                            byte[] bb = line.getBytes();
+                            for (byte b : bb) {
+                                out.write(b);
+                            }
+                            out.flush();
+                           /*writer.write(line);
+                           writer.flush();*/
+
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                }finally {
+                } finally {
                     try {
-                        outputStream.close();
+                        out.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -41,14 +54,29 @@ public class MyChatClient {
             new Thread(() -> {
                 InputStream inputStream = null;
                 try {
-                    inputStream = socket.getInputStream();
+                    inputStream = client.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
+                    char[] data = new char[1024];
                     while (true) {
-                        String data = reader.readLine();
-                        System.out.println(data);
-                    }
 
+                        int num = reader.read(data);
+                        if (num>0){
+                            System.out.println(new String(data, 0, num));
+                        }else{
+                            client.close();
+                            break;
+                        }
+
+                        /*String dataline = reader.readLine(); //阻塞2
+
+                        if (null != dataline) {
+                            System.out.println(dataline);
+                        } else {
+                            client.close();
+                            break;
+                        }*/
+                    }
+                    System.out.println("客户端断开");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
