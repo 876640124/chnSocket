@@ -27,6 +27,5 @@ public class MyServerSocket {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

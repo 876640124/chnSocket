@@ -20,10 +20,5 @@ public class MySocket {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (;;){
-
-        }
     }
-
-
 }

@@ -31,24 +31,24 @@ public class MyChatServer {
                 Thread.currentThread().setName("接收线程");
                 try (InputStream in = client.getInputStream()) {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                    char[] data = new char[1024];
+                    // char[] data = new char[1024];
                     while (true) {
-                        int num = reader.read(data);
+                        /*int num = reader.read(data);
                         if (num>0){
                             System.out.println(new String(data, 0, num));
                         }else{
                             client.close();
                             break;
-                        }
+                        }*/
 
                         // 阻塞获取数据
-                        /*String data = reader.readLine();
-                        if (null != data) {
-                            System.out.println(data);
+                        String dataline = reader.readLine();
+                        if (null != dataline) {
+                            System.out.println(dataline);
                         } else {
                             client.close();
                             break;
-                        }*/
+                        }
                     }
                     System.out.println("客户端连接断开");
                     client.close();
@@ -68,17 +68,18 @@ public class MyChatServer {
 
                     InputStream in = System.in;
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                    //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
                     while (true) {
                         String line = reader.readLine();
                         if (line != null) {
-                            byte[] bb = line.getBytes();
+                            /*byte[] bb = line.getBytes();
                             for (byte b : bb) {
                                 out.write(b);
                             }
-                            out.flush();
-                            /*writer.write(line);
-                            writer.flush();*/
+                            out.flush();*/
+                            writer.write(line);
+                            writer.write("\n");
+                            writer.flush();
                         }
                     }
                 } catch (IOException e) {

@@ -25,17 +25,18 @@ public class MyChatClient {
 
                     InputStream in = System.in;
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                   // BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
                     while (true) {
                         String line = reader.readLine();
                         if (line != null) {
-                            byte[] bb = line.getBytes();
+                            /*byte[] bb = line.getBytes();
                             for (byte b : bb) {
                                 out.write(b);
                             }
-                            out.flush();
-                           /*writer.write(line);
-                           writer.flush();*/
+                            out.flush();*/
+                           writer.write(line);
+                            writer.write("\n");
+                            writer.flush();
 
                         }
                     }
@@ -56,25 +57,25 @@ public class MyChatClient {
                 try {
                     inputStream = client.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                    char[] data = new char[1024];
+                    // char[] data = new char[1024];
                     while (true) {
 
-                        int num = reader.read(data);
+                       /* int num = reader.read(data);
                         if (num>0){
                             System.out.println(new String(data, 0, num));
                         }else{
                             client.close();
                             break;
-                        }
+                        }*/
 
-                        /*String dataline = reader.readLine(); //阻塞2
+                        String dataline = reader.readLine(); //阻塞2
 
                         if (null != dataline) {
                             System.out.println(dataline);
                         } else {
                             client.close();
                             break;
-                        }*/
+                        }
                     }
                     System.out.println("客户端断开");
                 } catch (IOException e) {
