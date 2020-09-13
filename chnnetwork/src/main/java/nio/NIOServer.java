@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 /**
  * nio服务端代码，配置非阻塞，可以在单线程内接收多个客户端，该种实现方式效率问题原因在于连接增多之后每次需要遍历问询连接是否有数据到
- * 达，会有多次的用户态与内核态切换影响效率。
+ * 达，会有多次的用户态与内核态切换影响效率。可以使用nc [ip] [port]在linux下建立tcp连接来绑定该客户端发起TCP连接
  */
 public class NIOServer {
     public static void main(String[] args) throws IOException {
@@ -25,7 +25,7 @@ public class NIOServer {
         while (true) {
             SocketChannel client = serverSocketChannel.accept();
             if (client == null) {
-                System.out.println("client is null.");
+                //System.out.println("client is null.");
             } else {
                 client.configureBlocking(false);
                 int port = client.socket().getPort();

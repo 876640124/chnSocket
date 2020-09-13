@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
 
@@ -31,7 +32,11 @@ public class C10Kclient {
                 client1.bind(new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), i));
                 //  192.168.150.1：10000   192.168.150.11：9090
                 client1.connect(serverAddr);
+                ByteBuffer buffer = ByteBuffer.allocateDirect(4096);
+                buffer.put("hello".getBytes());
+                client1.write(buffer);
                 clients.add(client1);
+
 
                 /*client2.bind(new InetSocketAddress("192.168.110.100", i));
                 //  192.168.110.100：10000  192.168.150.11：9090
