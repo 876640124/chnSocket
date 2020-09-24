@@ -38,6 +38,8 @@ public class NIOServer {
             // 遍历每个clients看是否能获取到数据
             clients.stream().forEach((c) -> {
                 try {
+                    boolean connected = c.isConnected();
+
                     int num = c.read(buffer);
                     if (num > 0) {
                         buffer.flip();
