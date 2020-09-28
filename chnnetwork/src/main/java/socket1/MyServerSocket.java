@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.channels.SocketChannel;
 
 public class MyServerSocket {
 
@@ -14,6 +15,7 @@ public class MyServerSocket {
             Socket socket = server.accept();
             System.out.println("连接创建");
             InputStream inputStream = socket.getInputStream();
+            SocketChannel channel = socket.getChannel();
             byte[] bytes = new byte[1024];
             int len;
             StringBuilder sb = new StringBuilder();

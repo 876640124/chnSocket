@@ -13,7 +13,7 @@ public class MyChatClient {
             String hostAddress = localHost.getHostAddress();
             System.out.println(hostAddress);
             Socket client = new Socket(hostAddress, 9090);
-
+ 
             //发送线程
             new Thread(() -> {
                 OutputStream out = null;
